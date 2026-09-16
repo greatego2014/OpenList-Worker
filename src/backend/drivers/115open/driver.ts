@@ -182,7 +182,8 @@ export class Pan115Driver implements StorageDriver {
 
     // 用 GetFolderInfoByPath 一次性解析（Go Get 逻辑）
     const rootPath = this.parentPath === "/" ? "" : this.parentPath
-    const fullPath = `${rootPath}${clean}` || "/"    try {
+    const fullPath = `${rootPath}${clean}` || "/"    
+    try {
       if (!this.reserve()) throw new Error("subrequest budget exceeded")
       const info = await this.client.getFolderInfoByPath(fullPath)
       if (info.file_id) {
